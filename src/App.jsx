@@ -1,17 +1,28 @@
 import { Grid } from "@mui/material";
-import youtube from "./api/youtube";
-import SearchBar from "./components/SearchBar";
-import VideoDetail from "./components/VideoDetail";
-import VideoList from "./components/VideoList";
+import { SearchBar, VideoDetail, VideoList } from "./components";
+import axios from "axios";
 
 
 function App() {
+
+  async function submitHandler(search) {
+    const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+      params: {
+        part: 'snippet',
+        maxResults: 5,
+        key: import.meta.env.VITE_YOUTUBE_API_KEY,
+        q: search
+      }
+    })
+    console.log(response.data)
+  }
+
   return (
-    <Grid justify="center" container spacing={16}>
+    <Grid justify="center" container spacing={10}>
       <Grid item xs={12}>
-        <Grid justify="center" container spacing={16}>
+        <Grid justify="center" container spacing={10}>
           <Grid item xs={12}>
-            <SearchBar />
+            <SearchBar onFormSubmit={submitHandler} />
           </Grid>
           <Grid item xs={8}>
             <VideoDetail />
