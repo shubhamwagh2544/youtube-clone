@@ -1,9 +1,15 @@
 import { Grid } from "@mui/material";
 import { SearchBar, VideoDetail, VideoList } from "./components";
 import axios from "axios";
+import { useState } from "react";
 
 
 function App() {
+
+  const [videoState, setVideosState] = useState({
+    videos: [],
+    selectedVideo: null
+  })
 
   async function submitHandler(search) {
     const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
@@ -14,7 +20,12 @@ function App() {
         q: search
       }
     })
-    console.log(response.data)
+    console.log(response.data.items)
+
+    setVideosState({
+      videos: response.data.items,
+      selectedVideo: response.data.items[0]
+    })
   }
 
   return (
@@ -25,7 +36,7 @@ function App() {
             <SearchBar onFormSubmit={submitHandler} />
           </Grid>
           <Grid item xs={8}>
-            <VideoDetail />
+            <VideoDetail video={videoState.selectedVideo} />
           </Grid>
           <Grid item xs={4}>
             <VideoList />
