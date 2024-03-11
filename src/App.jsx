@@ -26,12 +26,20 @@ function App() {
       videos: response.data.items,
       selectedVideo: response.data.items[0]
     })
+    console.log(videoState)
+  }
+
+  function videoSelect(video) {
+    setVideosState({
+      ...videoState,
+      selectedVideo: video
+    })
   }
 
   return (
     <Grid justify="center" container spacing={10}>
       <Grid item xs={12}>
-        <Grid justify="center" container spacing={10}>
+        <Grid justify="center" container spacing={5}>
           <Grid item xs={12}>
             <SearchBar onFormSubmit={submitHandler} />
           </Grid>
@@ -39,7 +47,7 @@ function App() {
             <VideoDetail video={videoState.selectedVideo} />
           </Grid>
           <Grid item xs={4}>
-            <VideoList />
+            <VideoList videos={videoState.videos} videoSelect={videoSelect} />
           </Grid>
         </Grid>
 
