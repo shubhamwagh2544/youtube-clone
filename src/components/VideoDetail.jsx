@@ -3,7 +3,7 @@ import { Paper, Typography } from "@mui/material"
 
 export default function VideoDetail({ video }) {
 
-    if (!video) return <div>Loading...</div>
+    if (!video) return <div>Search something...</div>
 
     const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`
     //console.log(video.id.videoId)
